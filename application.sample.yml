@@ -1,0 +1,70 @@
+# Base Configs
+APP_NAME: "sample-app"
+APP_VERSION: 0.0.1
+APP_ENVIRONMENT: "staging"
+APP_WEB_PORT: 8181
+APP_NON_WEB_PORT: 9191
+APP_LOG_LEVEL: "DEBUG"
+APP_HEALTH_CHECK_API_PATH: "/ping"
+APP_SWAGGER_ENABLED: true
+APP_SWAGGER_DOCS_DIRECTORY: "/docs/"
+
+# Translation Configs
+TRANSLATIONS_ENABLED: true
+TRANSLATIONS_PATH: "./i18n"
+TRANSLATIONS_WHITELISTED_LOCALES: "en_ID,id_ID,en_MY,my_MY,en_SG,ch_SG"
+TRANSLATIONS_DEFAULT_LOCALE: "en_EN"
+
+# Instrumentation Configs
+## Data Dog Configs
+DATA_DOG_ENABLED: true
+DATA_DOG_HOST: "localhost"
+DATA_DOG_PORT: 8125
+DATA_DOG_FLUSH_PERIOD_SECONDS: 20
+
+## Data Dog Tracing
+DD_TRACE_AGENT_ENABLED: true
+DD_AGENT_HOST: "localhost"
+DD_TRACE_AGENT_PORT: 8126
+DD_TRACE_LOG_LEVEL: "DEBUG"
+DD_LOGS_INJECTION: true
+
+## Sentry Configs
+SENTRY_ENABLED: true
+SENTRY_DSN: "dummy_DSN"
+
+## New Relic Configs
+NEW_RELIC_ENABLED: true
+NEW_RELIC_LICENSE_KEY: "dummy"
+
+# Persistence Layer Configs
+## Redis Configs
+REDIS_HOST: "localhost"
+REDIS_PORT: 6379
+REDIS_USERNAME: "redis"
+REDIS_PASSWORD: "redis"
+
+## Postgres DB Configs
+POSTGRES_HOST: "localhost"
+POSTGRES_PORT: 5432
+POSTGRES_DB_NAME: "belvedere"
+POSTGRES_USERNAME: "belvedere"
+POSTGRES_PASSWORD: "password"
+POSTGRES_POOL_SIZE: 20
+POSTGRES_MIGRATIONS_DIRECTORY: "./pg_migrations"
+
+## Mongo DB Configs
+MONGO_HOSTS: "localhost:27017"
+MONGO_DB_NAME: "admin"
+MONGO_USERNAME: "belvedere"
+MONGO_PASSWORD: "belvedere"
+MONGO_POOL_SIZE: 20
+MONGO_SOCKET_TIMEOUT: 500
+MONGO_CONNECTION_TIMEOUT: 1000
+
+# Sample Custom Config
+TEST_KEY_ONE: 20
+TEST_KEY_TWO: "test_value"
+TEST_KEY_THREE: true
+TEST_KEY_FOUR: "val_1,val_2,val_3"
+TEST_KEY_FIVE: "1,2,3"

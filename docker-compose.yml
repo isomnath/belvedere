@@ -1,0 +1,65 @@
+version: '3.0'
+
+services:
+  postgres:
+    image: postgres:11.4-alpine
+    container_name: belvedere_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: belvedere
+      POSTGRES_USER: belvedere
+      POSTGRES_PASSWORD: password
+    logging:
+      driver: none
+    ports:
+      - '5432:5432'
+    volumes:
+      - ~/Docker/postgres/data:/var/lib/postgresql/data
+    networks:
+      - belvedere
+
+  mongo:
+    image: mongo:4.4.11-rc1
+    container_name: belvedere_mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: belvedere
+      MONGO_INITDB_ROOT_PASSWORD: belvedere
+    logging:
+      driver: none
+    ports:
+      - '27017:27017'
+    volumes:
+      - ~/Docker/mongo/data:/data/db
+    networks:
+      - belvedere
+
+  redis:
+    image: redis:6.2
+    container_name: belvedere_redis
+    restart: always
+    logging:
+      driver: none
+    ports:
+      - '6379:6379'
+    volumes:
+      - ~/Docker/redis/data:/data
+    networks:
+      - belvedere
+
+  datadog-agent:
+    image: datadog/agent
+    container_name: belvedere_data_dog_agent
+    environment:
+      - DD_API_KEY=dummy
+      - DD_APM_ENABLED=true
+    ports:
+      - '8126:8126'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - '/proc/:/host/proc/:ro'
+      - '/sys/fs/cgroup/:/host/sys/fs/cgroup:ro'
+
+networks:
+  belvedere:
+    driver: bridge
