@@ -28,7 +28,7 @@ jobs:
           paths:
             - ~/go/src/github.com/isomnath/belvedere
           key: repo-{{ .Environment.CIRCLE-SHA1 }}
-      - attach-workspace:
+      - attach_workspace:
           at: ~/workspace
       - run:
           echo "1.0.$CIRCLE_BUILD_NUM" > ~/workspace/version
@@ -43,7 +43,7 @@ jobs:
       - restore_cache:
           keys:
             - repo-{{ .Environment.CIRCLE-SHA1 }}
-      - attach-workspace:
+      - attach_workspace:
           at: ~/workspace
       - run:
           name: Install Dependencies
@@ -65,7 +65,7 @@ jobs:
       - restore_cache:
           keys:
             - go-mod-v4-{{ checksum "go.sum" }}
-      - attach-workspace:
+      - attach_workspace:
           at: ~/workspace
       - run:
           name: Prepare workspace for running unit tests
