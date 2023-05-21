@@ -27,7 +27,7 @@ jobs:
       - save_cache:
           paths:
             - ~/go/src/github.com/isomnath/belvedere
-          key: repo-{{ .Environment.CIRCLE-SHA1 }}
+          key: go-mod-v4-{{ checksum "go.sum" }}
       - attach_workspace:
           at: ~/workspace
       - run:
@@ -42,7 +42,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - repo-{{ .Environment.CIRCLE-SHA1 }}
+            - go-mod-v4-{{ checksum "go.sum" }}
       - attach_workspace:
           at: ~/workspace
       - run:
@@ -59,9 +59,6 @@ jobs:
     executor: test-executor
     working_directory: ~/go/src/github.com/isomnath/belvedere
     steps:
-      - restore_cache:
-          keys:
-            - repo-{{ .Environment.CIRCLE-SHA1 }}
       - restore_cache:
           keys:
             - go-mod-v4-{{ checksum "go.sum" }}
