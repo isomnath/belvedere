@@ -55,42 +55,42 @@ jobs:
             make vet
             make lint
 
-    unit_test:
-      executor: test-executor
-      working_directory: ~/go/src/github.com/isomnath/belvedere
-      steps:
-        - restore_cache:
-            keys:
-              - repo-{{ .Environment.CIRCLE-SHA1 }}
-        - restore_cache:
-            keys:
-              - go-mod-v4-{{ checksum "go.sum" }}
-        - attach-workspace:
-            at: ~/workspace
-        - run:
-            name: Prepare workspace for running unit tests
-            command: |
-              # Setup go paths
-              export GOPATH=~/go
-              export CGO_ENABLED=0
-              # Install postgres client
-              sudo apt-get update && sudo apt install postgresql-client libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libgtk-3-0 libgbm1 libasound2
-              make setup-ci
-              go get ./...
-              make copy-config-ci
-        - save_cache:
-            key: go-mod-v4-{{ checksum "go.sum" }}
-            paths:
-              - "/go/pkg/mod"
-        - run:
-            name: Static Unit Tests
-            command: |
-              make test-cover-report
-              cp coverage.out ~/workspace
-        - persist_to_workspace:
-            root: ~/workspace
-            paths:
-              - coverage.out
+  unit_test:
+    executor: test-executor
+    working_directory: ~/go/src/github.com/isomnath/belvedere
+    steps:
+      - restore_cache:
+          keys:
+            - repo-{{ .Environment.CIRCLE-SHA1 }}
+      - restore_cache:
+          keys:
+            - go-mod-v4-{{ checksum "go.sum" }}
+      - attach-workspace:
+          at: ~/workspace
+      - run:
+          name: Prepare workspace for running unit tests
+          command: |
+            # Setup go paths
+            export GOPATH=~/go
+            export CGO_ENABLED=0
+            # Install postgres client
+            sudo apt-get update && sudo apt install postgresql-client libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libgtk-3-0 libgbm1 libasound2
+            make setup-ci
+            go get ./...
+            make copy-config-ci
+      - save_cache:
+          key: go-mod-v4-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+      - run:
+          name: Static Unit Tests
+          command: |
+            make test-cover-report
+            cp coverage.out ~/workspace
+      - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - coverage.out
 
 workflows:
   version: 2.1
