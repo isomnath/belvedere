@@ -96,7 +96,7 @@ workflows:
   version: 2.1
   analyse-and-test:
     jobs:
-      - checkout_code:
+      - checkout_code
       - code_analysis:
           requires:
             - checkout_code
