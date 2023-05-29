@@ -29,6 +29,7 @@ jobs:
           command: |
             pwd
             ls -al ~
+            ls -al ~/go/src/github.com/isomnath/belvedere/project
             ls -al ~/go/src/github.com/isomnath/belvedere/
       - save_cache:
           paths:
