@@ -24,6 +24,12 @@ jobs:
     executor: go-executor
     working_directory: ~/go/src/github.com/isomnath/belvedere
     steps:
+      - run:
+          name: directory logging
+          command: |
+            pwd
+            ls -al ~
+            ls -al ~/go/src/github.com/isomnath/belvedere/
       - save_cache:
           paths:
             - ~/go/src/github.com/isomnath/belvedere
