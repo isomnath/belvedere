@@ -1,0 +1,109 @@
+version: 2.1
+
+executors:
+  go-executor:
+    docker:
+      - image: cimg/go:1.20
+    working_directory: ~/go/src/github.com/isomnath/belvedere
+  test-executor:
+    docker:
+      - image: cimg/go:1.20
+      - image: circleci/postgres:11.4-alpine
+        environment:
+          POSTGRES_DB: belvedere
+          POSTGRES_USER: belvedere
+          POSTGRES_PASSWORD: password
+      - image: datadog/agent:latest
+        environment:
+          DD_API_KEY: dummy
+          DD_APM_ENABLED: true
+    working_directory: ~/go/src/github.com/isomnath/belvedere
+
+jobs:
+  checkout_code:
+    executor: go-executor
+    working_directory: ~/go/src/github.com/isomnath/belvedere
+    steps:
+      - run:
+          name: directory logging
+          command: |
+            pwd
+            ls -al ~
+            ls -al ~/go/src/github.com/isomnath/belvedere/go
+            ls -al ~/go/src/github.com/isomnath/belvedere/
+      - save_cache:
+          paths:
+            - ~/go/src/github.com/isomnath/belvedere
+          key: go-mod-v4-{{ checksum "go.sum" }}
+      - attach_workspace:
+          at: ~/workspace
+      - run:
+          echo "1.0.$CIRCLE_BUILD_NUM" > ~/workspace/version
+      - persist_to_workspace:
+          root: ~/workspace
+          paths: version
+
+  code_analysis:
+    executor: go-executor
+    working_directory: ~/go/src/github.com/isomnath/belvedere
+    steps:
+      - restore_cache:
+          keys:
+            - go-mod-v4-{{ checksum "go.sum" }}
+      - attach_workspace:
+          at: ~/workspace
+      - run:
+          name: Install Dependencies
+          command: make setup-ci
+      - run:
+          name: Run static code analysis
+          command: |
+            make fmt
+            make vet
+            make lint
+
+  unit_test:
+    executor: test-executor
+    working_directory: ~/go/src/github.com/isomnath/belvedere
+    steps:
+      - restore_cache:
+          keys:
+            - go-mod-v4-{{ checksum "go.sum" }}
+      - attach_workspace:
+          at: ~/workspace
+      - run:
+          name: Prepare workspace for running unit tests
+          command: |
+            # Setup go paths
+            export GOPATH=~/go
+            export CGO_ENABLED=0
+            # Install postgres client
+            sudo apt-get update && sudo apt install postgresql-client libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libgtk-3-0 libgbm1 libasound2
+            make setup-ci
+            go get ./...
+            make copy-config-ci
+      - save_cache:
+          key: go-mod-v4-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+      - run:
+          name: Static Unit Tests
+          command: |
+            make test-cover-report
+            cp coverage.out ~/workspace
+      - persist_to_workspace:
+          root: ~/workspace
+          paths:
+            - coverage.out
+
+workflows:
+  version: 2.1
+  analyse-and-test:
+    jobs:
+      - checkout_code
+      - code_analysis:
+          requires:
+            - checkout_code
+      - unit_test:
+          requires:
+            - code_analysis
