@@ -15,7 +15,6 @@ require (
 require (
 	github.com/DataDog/datadog-go/v5 v5.2.0
 	github.com/getsentry/sentry-go v0.21.0
-	github.com/golang-migrate/migrate v3.5.4+incompatible
 	github.com/golang-migrate/migrate/v4 v4.15.2
 	github.com/newrelic/go-agent v3.20.3+incompatible
 	gopkg.in/redis.v5 v5.2.9
@@ -70,9 +69,9 @@ require (
 	go.uber.org/atomic v1.10.0 // indirect
 	go4.org/intern v0.0.0-20230205224052-192e9f60865c // indirect
 	go4.org/unsafe/assume-no-moving-gc v0.0.0-20230209150437-ee73d164e760 // indirect
-	golang.org/x/mod v0.8.0 // indirect
-	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/mod v0.17.0 // indirect
+	golang.org/x/sync v0.10.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/grpc v1.53.0 // indirect
@@ -87,9 +86,9 @@ require (
 	github.com/nicksnyder/go-i18n/v2 v2.2.1
 	github.com/swaggo/http-swagger v1.3.3
 	github.com/urfave/negroni v1.0.0
-	golang.org/x/crypto v0.7.0 // indirect
-	golang.org/x/net v0.8.0 // indirect
-	golang.org/x/text v0.8.0
-	golang.org/x/tools v0.6.0 // indirect
+	golang.org/x/crypto v0.31.0 // indirect
+	golang.org/x/net v0.33.0 // indirect
+	golang.org/x/text v0.21.0
+	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
 	gopkg.in/DataDog/dd-trace-go.v1 v1.47.0
 )
