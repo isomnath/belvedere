@@ -1,7 +1,4 @@
 # Belvedere
-
----
-
 ![Workflow Status](https://github.com/isomnath/belvedere/actions/workflows/main.yml/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/isomnath/belvedere)](https://goreportcard.com/report/github.com/isomnath/belvedere)
 
