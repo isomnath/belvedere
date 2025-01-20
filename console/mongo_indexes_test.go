@@ -3,6 +3,7 @@ package console
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/isomnath/belvedere/config"
 	"github.com/isomnath/belvedere/instrumentation"
@@ -10,8 +11,8 @@ import (
 	"github.com/isomnath/belvedere/store"
 
 	"github.com/stretchr/testify/suite"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/x/bsonx"
 )
 
 type MongoIndexSupportTestSuite struct {
@@ -43,8 +44,8 @@ func (suite *MongoIndexSupportTestSuite) TearDownTest() {
 func (suite *MongoIndexSupportTestSuite) TestCreateIndexesSuccessfully() {
 	indexes := []mongo.IndexModel{
 		{
-			Keys: bsonx.MDoc{
-				"test_key": bsonx.Int64(1),
+			Keys: bson.M{
+				"test_key": int64(1),
 			},
 		},
 	}
@@ -58,16 +59,16 @@ func (suite *MongoIndexSupportTestSuite) TestCreateIndexesSuccessfully() {
 func (suite *MongoIndexSupportTestSuite) TestCreateIndexesFails() {
 	indexes := []mongo.IndexModel{
 		{
-			Keys: bsonx.MDoc{
-				"test_key": bsonx.Int64(1),
+			Keys: bson.M{
+				"test_key": int64(1),
 			},
 		},
 	}
 	_ = CreateIndexes(suite.collectionName, indexes)
 	indexes = []mongo.IndexModel{
 		{
-			Keys: bsonx.MDoc{
-				"test_key": bsonx.Timestamp(uint32(1), uint32(12)),
+			Keys: bson.M{
+				"test_key": time.Now(),
 			},
 		},
 	}

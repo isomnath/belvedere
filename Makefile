@@ -1,6 +1,6 @@
 .PHONY: all clean
 all: clean setup fmt vet lint imports copy-config setup-local-infra test-cover-report
-ci-all: clean setup fmt vet lint imports copy-config-ci test-cover-report
+ci-all: clean setup fmt vet lint imports copy-config-ci setup-ci-infra test-cover-report
 
 APP=belvedere
 ALL_PACKAGES=$(shell go list ./...)
@@ -73,9 +73,17 @@ test-cover-report: test-cover
 test-cover-html: test-cover
 	@go tool cover -html=coverage.out
 
+static-code-analysis: clean fmt vet lint imports
+
+setup-ci-infra: clean-stale-infra setup-docker-directory
+	@echo "starting all infra for tests..."
+	@docker compose up -d
+	@echo "waiting for all components to be available ..."
+	@sleep 15
+
 setup-local-infra: clean-stale-infra setup-docker-directory
 	@echo "starting all infra for tests..."
-	@docker-compose up -d
+	@docker compose up -d
 	@echo "waiting for all components to be available ..."
 	@sleep 30
 
