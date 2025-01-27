@@ -15,7 +15,7 @@ require (
 require (
 	github.com/DataDog/datadog-go/v5 v5.6.0
 	github.com/getsentry/sentry-go v0.31.1
-	github.com/golang-migrate/migrate/v4 v4.18.1
+	github.com/golang-migrate/migrate/v4 v4.18.2
 	github.com/newrelic/go-agent v3.21.0+incompatible
 	gopkg.in/redis.v5 v5.2.9
 )
