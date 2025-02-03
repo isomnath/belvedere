@@ -122,7 +122,7 @@ require (
 
 require (
 	github.com/gorilla/mux v1.8.1 // indirect
-	github.com/nicksnyder/go-i18n/v2 v2.4.1
+	github.com/nicksnyder/go-i18n/v2 v2.5.1
 	github.com/swaggo/http-swagger v1.3.4
 	github.com/urfave/negroni v1.0.0
 	golang.org/x/crypto v0.32.0 // indirect
