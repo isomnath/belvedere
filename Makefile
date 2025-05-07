@@ -21,8 +21,6 @@ setup-ci:
 	@go install golang.org/x/lint/golint@latest
 	@echo "installing import manager tool ..."
 	@go install golang.org/x/tools/cmd/goimports@latest
-	@echo "downloading coveralls cli tool ..."
-	@go install github.com/mattn/goveralls@latest
 	@echo "installing all project dependencies ..."
 	@go get ./...
 
